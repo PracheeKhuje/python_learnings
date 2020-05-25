@@ -1,0 +1,89 @@
+import pyttsx3 # pip install pyttsx3 - Speech to text module
+import speech_recognition as sr # pip install SpeechRecognition
+import datetime
+import wikipedia # pip install wikipedia
+import webbrowser
+import os
+import smtplib
+import pyaudio
+import googlesearch
+
+print("Initializing Jarvis")
+engine = pyttsx3.init('sapi5')
+voices = engine.getProperty('voices')
+engine.setProperty('voice', voices[0].id)
+
+# Speak function will speak the string which is passed to it.
+def speak(text):
+    engine.say(text)
+    engine.runAndWait()
+# This function will wish me as per current time
+def wishMe(name1):
+    hour = datetime.datetime.now().hour
+    # print(hour)
+    if hour >=0 and hour <12:
+        speak(f"Good morning {name1}")
+    elif hour >=12 and hour <18:
+        speak(f"Good afternoon {name1}")
+    else:
+        speak(f"Good evening {name1}")
+
+    speak("How are you...? How can I help you")
+#This function will take command from the microphone
+def takeCommand():
+    r = sr.Recognizer()
+    with sr.Microphone() as source:
+        print("Say something!")
+        audio = r.record(source,duration=5)
+    try:
+        print("Recognizing..")
+        query = r.recognize_google(audio, language = 'en-in')
+        print(f"user said {query}\n")
+    except Exception as e:
+        print("Say that again please")
+        query= None
+    return query
+
+#Main program statrs here
+speak("Initializing Jarvis...")
+wishMe()
+query = takeCommand()
+
+#Logic for executing basic task as per the query
+if 'wikipedia' in query.lower():
+    speak("Searching wikipedia...")
+    query = query.replace("wikipedia", "")
+    result = wikipedia.summary(query,sentences = 2)
+    print(result)
+    speak(result)
+
+elif 'open youtube' in query.lower():
+    # webbrowser.open("youtube.com") #opens in internet explorer
+    url = "youtube.com"
+    chrome_path = "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s"
+    webbrowser.get(chrome_path).open(url)
+
+elif 'open google' in query.lower():
+    url = "google.com"
+    chrome_path = "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s"
+    webbrowser.get(chrome_path).open(url)
+
+elif 'play music' in query.lower():
+    url = "gaana.com"
+    chrome_path = "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s"
+    webbrowser.get(chrome_path).open(url)
+
+elif 'the time' in query.lower():
+    strTime = datetime.datetime.now().strftime("%H:%M:%S")
+    speak(f"The time is {strTime}")
+
+elif 'search' in query.lower():
+     speak(f"Found thses results for {query}")
+     url = "https://google.com//?/#q="
+     webbrowser.open(url+query,new = 2)
+     try:
+         from googlesearch import search 
+     except ImportError: 
+         print("No module named 'google' found")
+     for j in search(query, tld="co.in", num=5, stop=5, pause=2):
+        print(j) 
