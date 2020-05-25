@@ -18,7 +18,7 @@ def speak(text):
     engine.say(text)
     engine.runAndWait()
 # This function will wish me as per current time
-def wishMe(name1):
+def wishMe():
     hour = datetime.datetime.now().hour
     # print(hour)
     if hour >=0 and hour <12:
