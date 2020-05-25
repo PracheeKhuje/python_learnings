@@ -22,11 +22,11 @@ def wishMe():
     hour = datetime.datetime.now().hour
     # print(hour)
     if hour >=0 and hour <12:
-        speak(f"Good morning {name1}")
+        speak(f"Good morning")
     elif hour >=12 and hour <18:
-        speak(f"Good afternoon {name1}")
+        speak(f"Good afternoon")
     else:
-        speak(f"Good evening {name1}")
+        speak(f"Good evening")
 
     speak("How are you...? How can I help you")
 #This function will take command from the microphone
@@ -82,8 +82,8 @@ elif 'search' in query.lower():
      url = "https://google.com//?/#q="
      webbrowser.open(url+query,new = 2)
      try:
-         from googlesearch import search 
-     except ImportError: 
+         from googlesearch import search
+     except ImportError:
          print("No module named 'google' found")
      for j in search(query, tld="co.in", num=5, stop=5, pause=2):
-        print(j) 
+        print(j)
