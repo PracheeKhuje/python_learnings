@@ -5,7 +5,7 @@ import wikipedia # pip install wikipedia
 import webbrowser
 import os
 import smtplib
-import pyaudio
+import pyaudio # pip install pipwin # pipwin install pyaudio
 import googlesearch
 
 print("Initializing Jarvis")
